@@ -1,0 +1,19 @@
+First Launch:
+Name = Root
+Password = voidlinux
+
+Wifi Connect = 
+ip link : Identify networks
+wpa_cli : interactive method
+(steps to follow)
+          scan
+          scan_results
+          add_network
+          set_network 0 ssid "YourSSID"
+          set_network 0 psk "YourPassword"
+          enable_network 0
+          save_config
+          quit
+dhcpcd wlp2s0 : enables network connectivity
+
+check connection = ping voidlinux.org
