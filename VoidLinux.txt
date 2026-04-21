@@ -17,3 +17,21 @@ wpa_cli : interactive method
 dhcpcd wlp2s0 : enables network connectivity
 
 check connection = ping voidlinux.org
+
+disk preperation:
+                    use cfdisk for TUI
+                    make 3 parts:
+                              1G (boot)
+                              4G (swap)
+                              Remainder (root)
+                    write changes (enter yes)
+                    quit
+
+mkfs.ext4 /dev/(enter your drive)
+mkfs.fat -F 32 /dev/(enter your drive)
+mkswap /dev/(enter your drive)
+
+mount /dev/drive3 /mnt
+mount --mkdir /dev/(enter your drive) /mnt/boot/efi
+swapon /dev/(enter your drive)
+
