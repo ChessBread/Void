@@ -35,3 +35,78 @@ mount /dev/drive3 /mnt
 mount --mkdir /dev/(enter your drive) /mnt/boot/efi
 swapon /dev/(enter your drive)
 
+xbps-install -Sy -R https://repo-default.voidlinux.org/current -r /mnt base-system
+xgenfstab -U /mnt > /mnt/etc/fstab
+xchroot /mnt /bin/bash
+
+xbps-install base-devel vim grub efibootmgr
+
+edit host name:
+          vim /etc/hostname
+
+vim /etc/default/libc-locales
+
+xbps-reconfigure -f glibc-locales
+
+set root password:
+                    passwd
+create user:
+          useradd -mG wheel "username here"
+set user password:
+          passwd "username here"
+
+give user sudo privilage:
+          EDITOR=vim visudo (comment out # infromt of %wheel ALL=(ALL:ALL) ALL)
+
+xbps-install -S grub-x86_64-efi
+
+grub-install --terget=x86_64-efi --efi-directory=/boot/efi --bootloader-id="Void"
+
+grub-mkconfig -o /boot/grub/grub.cfg
+
+check sudo privilage:
+          su "username here"
+          xbps-install -Su (if asks for password and proceeds after insert it has privilage)
+
+make bash alias;
+          go to home (cd)
+          vim .bashrc
+          add:
+                    alias xi='xbps-install'
+          source file:
+                    source .bashrc
+
+xi xorg xinit
+
+(i3-wm install) (install what you want)
+
+xi i3 i3status alacritty firefox
+
+exit
+
+setup dhcpcd for runit:
+                  ls -s /etc/dhcpcd /etc/runit/runsvdir/default/dhcpcd
+check:
+    ls -ls /etc/runit/runsvdir/default (check for dhcpcd)
+
+insure all packages are installed correctly:
+          xbps-reconfigure -fa
+exit
+
+unmount -R /mnt
+
+lsblk (to ensure disks are configured correctly)
+
+shutdown -r now
+
+(follow if i3 was used)
+echo 'exec i3' >> .xinitrc
+
+startx
+
+(get app launcher)
+
+
+
+                    
+
